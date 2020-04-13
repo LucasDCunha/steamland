@@ -10,10 +10,53 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_13_151726) do
+ActiveRecord::Schema.define(version: 2020_04_13_153555) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bookings", force: :cascade do |t|
+    t.bigint "Game_id"
+    t.bigint "User_id"
+    t.time "start_time"
+    t.time "end_time"
+    t.date "date"
+    t.integer "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["Game_id"], name: "index_bookings_on_Game_id"
+    t.index ["User_id"], name: "index_bookings_on_User_id"
+  end
+
+  create_table "categoties", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "game_categories", force: :cascade do |t|
+    t.bigint "Game_id"
+    t.bigint "Category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["Category_id"], name: "index_game_categories_on_Category_id"
+    t.index ["Game_id"], name: "index_game_categories_on_Game_id"
+  end
+
+  create_table "games", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "owns", force: :cascade do |t|
+    t.bigint "Game_id"
+    t.bigint "User_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["Game_id"], name: "index_owns_on_Game_id"
+    t.index ["User_id"], name: "index_owns_on_User_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
